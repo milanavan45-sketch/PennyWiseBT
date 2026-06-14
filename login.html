@@ -260,6 +260,18 @@
     </main>
 
     <script type="module">
+        const existingUser = localStorage.getItem('budgetTrackerUser');
+        if (existingUser) {
+            try {
+                const parsedUser = JSON.parse(existingUser);
+                if (parsedUser && parsedUser.uid && parsedUser.email) {
+                    window.location.replace('index.html');
+                }
+            } catch {
+                localStorage.removeItem('budgetTrackerUser');
+            }
+        }
+
         // Firebase 閰嶇疆 - 璇锋浛鎹负浣犵殑 Firebase 椤圭洰閰嶇疆
         // 璁块棶 https://console.firebase.google.com/ 鍒涘缓椤圭洰骞惰幏鍙栭厤缃?
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional

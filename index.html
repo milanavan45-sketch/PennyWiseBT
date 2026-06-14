@@ -157,7 +157,8 @@
     }
 
     .account-menu[hidden] { display: none; }
-    .account-email { margin: 4px 8px 10px; color: var(--muted); font-size: .84rem; overflow-wrap: anywhere; }
+    .account-name { margin: 4px 8px 0; font-weight: 850; overflow-wrap: anywhere; }
+    .account-email { margin: 2px 8px 10px; color: var(--muted); font-size: .84rem; overflow-wrap: anywhere; }
     .account-menu button { width: 100%; padding: 10px 12px; border-radius: 10px; text-align: left; color: var(--text); background: transparent; }
     .account-menu button:hover { background: var(--surface-soft); }
 
@@ -467,7 +468,8 @@
         <button class="icon-button avatar-button" id="avatarButton" type="button" aria-label="Account" aria-expanded="false">👤</button>
         <button class="icon-button" id="settingsButton" type="button" aria-label="Settings">⚙️</button>
         <div class="account-menu" id="accountMenu" hidden>
-          <p class="account-email" id="accountEmail">alex@example.com</p>
+          <p class="account-name" id="accountName">Account</p>
+          <p class="account-email" id="accountEmail"></p>
           <button id="switchAccountButton" type="button" data-i18n="switchAccount">Switch account</button>
           <button id="logoutButton" type="button" data-i18n="logout">Logout</button>
         </div>
@@ -598,6 +600,11 @@
           <h3 data-i18n="accountManagement">Account Management</h3>
           <div class="setting-row">
             <div class="setting-copy">
+              <strong id="settingsAccountName">Account</strong>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy">
               <strong data-i18n="currentEmail">Current email</strong>
               <small id="settingsEmail">alex@example.com</small>
             </div>
@@ -675,9 +682,25 @@
     (() => {
       "use strict";
 
+      const AUTH_STORAGE_KEY = "budgetTrackerUser";
       const STORAGE_KEY = "pennyWiseBT_v2";
       const RATES_IN_CAD = Object.freeze({ CAD: 1, USD: 1.35, CNY: 1.35 / 7.2, JPY: 1.35 / 150 });
       const supportedLanguages = ["en", "zh", "fr"];
+
+      function loadAuthenticatedUser() {
+        try {
+          const user = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY));
+          return user && user.uid && user.email ? user : null;
+        } catch {
+          return null;
+        }
+      }
+
+      const authenticatedUser = loadAuthenticatedUser();
+      if (!authenticatedUser) {
+        window.location.replace("login.html");
+        return;
+      }
 
       const translations = {
         en: {
@@ -758,7 +781,6 @@
       const defaultLanguage = supportedLanguages.includes(browserLanguage) ? browserLanguage : "en";
 
       const defaultState = () => ({
-        user: { email: "alex@example.com", loggedIn: true },
         language: defaultLanguage,
         defaultCurrency: "CAD",
         accessibility: { fontSize: "normal", buttonOutline: false, highContrast: false },
@@ -778,7 +800,6 @@
           return {
             ...base,
             ...saved,
-            user: { ...base.user, ...(saved.user || {}) },
             accessibility: { ...base.accessibility, ...(saved.accessibility || {}) },
             transactions: Array.isArray(saved.transactions) ? saved.transactions : base.transactions
           };
@@ -799,7 +820,8 @@
         budgetMeter: $("#budgetMeter"), budgetPercent: $("#budgetPercent"), budgetInput: $("#budgetInput"),
         budgetCurrencyLabel: $("#budgetCurrencyLabel"), transactionCurrency: $("#transactionCurrency"),
         settingsBackdrop: $("#settingsBackdrop"), accountMenu: $("#accountMenu"), avatarButton: $("#avatarButton"),
-        accountEmail: $("#accountEmail"), settingsEmail: $("#settingsEmail"), logoutButton: $("#logoutButton"),
+        accountName: $("#accountName"), accountEmail: $("#accountEmail"), settingsAccountName: $("#settingsAccountName"),
+        settingsEmail: $("#settingsEmail"), logoutButton: $("#logoutButton"),
         languageSelect: $("#languageSelect"), defaultCurrencySelect: $("#defaultCurrencySelect"),
         fontSizeSelect: $("#fontSizeSelect"), buttonOutlineToggle: $("#buttonOutlineToggle"),
         highContrastToggle: $("#highContrastToggle"), toast: $("#toast")
@@ -874,7 +896,7 @@
         });
         $("#settingsButton").setAttribute("aria-label", t("settings"));
         $("#closeSettingsButton").setAttribute("aria-label", state.language === "fr" ? "Fermer" : state.language === "zh" ? "关闭" : "Close");
-        elements.logoutButton.textContent = state.user.loggedIn ? t("logout") : t("login");
+        elements.logoutButton.textContent = t("logout");
         elements.languageSelect.value = state.language;
       }
 
@@ -966,10 +988,19 @@
       }
 
       function renderAccount() {
-        elements.accountEmail.textContent = state.user.email;
-        elements.settingsEmail.textContent = state.user.email;
-        elements.avatarButton.style.filter = state.user.loggedIn ? "none" : "grayscale(1)";
-        elements.logoutButton.textContent = state.user.loggedIn ? t("logout") : t("login");
+        const demoLabels = { en: "Demo Account", zh: "演示账户", fr: "Compte démo" };
+        const accountName = authenticatedUser.isDemo
+          ? demoLabels[state.language]
+          : authenticatedUser.name || authenticatedUser.email;
+        elements.accountName.textContent = accountName;
+        elements.settingsAccountName.textContent = accountName;
+        elements.accountEmail.textContent = authenticatedUser.email;
+        elements.settingsEmail.textContent = authenticatedUser.email;
+        elements.avatarButton.textContent = authenticatedUser.isDemo
+          ? "D"
+          : (authenticatedUser.name || authenticatedUser.email).trim().charAt(0).toUpperCase();
+        elements.avatarButton.setAttribute("aria-label", accountName);
+        elements.logoutButton.textContent = t("logout");
       }
 
       function renderCurrencyControls() {
@@ -1080,20 +1111,13 @@
       });
 
       $("#switchAccountButton").addEventListener("click", () => {
-        state.user.loggedIn = true;
-        state.user.email = state.user.email === "alex@example.com" ? "taylor@example.com" : "alex@example.com";
-        saveState();
-        renderAccount();
-        elements.accountMenu.hidden = true;
-        showToast(t("switchedAccount"));
+        localStorage.removeItem(AUTH_STORAGE_KEY);
+        window.location.replace("login.html");
       });
 
       elements.logoutButton.addEventListener("click", () => {
-        state.user.loggedIn = !state.user.loggedIn;
-        saveState();
-        renderAccount();
-        elements.accountMenu.hidden = true;
-        showToast(state.user.loggedIn ? t("loggedIn") : t("loggedOut"));
+        localStorage.removeItem(AUTH_STORAGE_KEY);
+        window.location.replace("login.html");
       });
 
       elements.fontSizeSelect.addEventListener("change", () => {
