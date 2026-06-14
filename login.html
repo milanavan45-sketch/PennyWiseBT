@@ -1,163 +1,240 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Budget Tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sign in to PennyWiseBT">
+    <title>Sign in - PennyWiseBT</title>
     <style>
-        /* 登录页面专用样式 */
+        :root {
+            --background: #f6f5f0;
+            --surface: #ffffff;
+            --surface-soft: #eef8f2;
+            --text: #17221c;
+            --muted: #66736b;
+            --border: #dce5df;
+            --brand: #176b45;
+            --brand-dark: #0d4d31;
+            --focus: #005fcc;
+            --shadow: 0 12px 30px rgba(22, 56, 38, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 8% 0%, rgba(244, 183, 64, 0.13), transparent 27rem),
+                var(--background);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.5;
+        }
+
+        button { font: inherit; }
+
+        button:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 3px;
+        }
+
         .login-container {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            display: grid;
+            place-items: center;
+            padding: 32px 18px;
         }
-        
+
         .login-card {
-            background: white;
-            border-radius: 20px;
-            padding: 50px 40px;
+            width: min(100%, 460px);
+            padding: 44px 40px 36px;
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            background: var(--surface);
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
-            animation: fadeInUp 0.5s ease;
+            box-shadow: var(--shadow);
+            animation: fade-in-up 0.45s ease both;
         }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .login-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
+            display: grid;
+            place-items: center;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 18px;
+            border-radius: 17px;
+            color: #ffffff;
+            background: var(--brand);
+            box-shadow: 0 8px 20px rgba(23, 107, 69, 0.2);
+            font-size: 1.7rem;
         }
-        
+
         .login-card h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
+            margin: 0;
+            color: var(--text);
+            font-size: clamp(1.85rem, 7vw, 2.25rem);
+            font-weight: 850;
+            letter-spacing: -0.04em;
         }
-        
+
         .login-subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+            margin: 8px 0 30px;
+            color: var(--muted);
+            font-size: 0.95rem;
         }
-        
-        .google-btn {
+
+        .google-btn,
+        .demo-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
             width: 100%;
-            padding: 14px 20px;
-            background-color: white;
-            color: #333;
-            border: 2px solid #e0e0e0;
+            min-height: 50px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            color: var(--text);
+            background: var(--surface);
+            font-weight: 750;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
+            transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
         }
-        
+
         .google-btn:hover {
-            border-color: #667eea;
-            background-color: #f8f9ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--brand);
+            background: var(--surface-soft);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(22, 56, 38, 0.08);
         }
-        
+
+        .google-btn:disabled,
+        .demo-btn:disabled {
+            cursor: wait;
+            opacity: 0.7;
+            transform: none;
+        }
+
         .google-icon {
             width: 24px;
             height: 24px;
+            flex: 0 0 auto;
         }
-        
+
         .divider {
             display: flex;
             align-items: center;
-            margin: 25px 0;
-            color: #999;
-            font-size: 12px;
+            gap: 13px;
+            margin: 22px 0;
+            color: var(--muted);
+            font-size: 0.78rem;
+            text-transform: lowercase;
         }
-        
+
         .divider::before,
         .divider::after {
             content: "";
             flex: 1;
             height: 1px;
-            background: #e0e0e0;
+            background: var(--border);
         }
-        
-        .divider span {
-            padding: 0 15px;
-        }
-        
+
         .demo-btn {
-            width: 100%;
-            padding: 12px 20px;
-            background-color: #f5f5f5;
-            color: #666;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: var(--brand-dark);
+            background: #f5f5f5;
         }
-        
+
         .demo-btn:hover {
-            background-color: #e8e8e8;
+            border-color: var(--brand);
+            color: var(--brand-dark);
+            background: var(--surface-soft);
+            transform: translateY(-1px);
         }
-        
+
         .features {
+            display: grid;
+            gap: 10px;
             margin-top: 30px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
             text-align: left;
-            border-top: 1px solid #e0e0e0;
-            padding-top: 25px;
         }
-        
+
         .features p {
-            font-size: 13px;
-            color: #888;
-            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.82rem;
         }
-        
+
+        .feature-check {
+            color: var(--brand);
+            font-weight: 900;
+        }
+
         .loading-spinner {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 2px solid #e0e0e0;
-            border-top-color: #667eea;
+            border: 3px solid var(--border);
+            border-top-color: var(--brand);
             border-radius: 50%;
-            animation: spin 0.6s linear infinite;
+            animation: spin 0.65s linear infinite;
         }
-        
+
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        .privacy-note {
+            margin: 22px 0 0;
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                align-items: start;
+                padding: 20px 10px;
+            }
+
+            .login-card {
+                padding: 32px 22px 28px;
+                border-radius: 22px;
+            }
+
+            .login-subtitle { margin-bottom: 25px; }
+            .features { margin-top: 25px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-icon">💰</div>
-            <h1>Budget Tracker</h1>
-            <p class="login-subtitle">Track your finances, achieve your goals</p>
-            
-            <button class="google-btn" id="googleLoginBtn">
-                <svg class="google-icon" viewBox="0 0 24 24" width="24" height="24">
+    <main class="login-container">
+        <section class="login-card" aria-labelledby="login-title">
+            <div class="login-icon" aria-hidden="true">💰</div>
+            <h1 id="login-title">PennyWiseBT</h1>
+            <p class="login-subtitle">Track your finances, achieve your goals.</p>
+
+            <button class="google-btn" id="googleLoginBtn" type="button">
+                <svg class="google-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -165,26 +242,26 @@
                 </svg>
                 Sign in with Google
             </button>
-            
-            <div class="divider">
-                <span>or</span>
-            </div>
-            
-            <button class="demo-btn" id="demoLoginBtn">
+
+            <div class="divider"><span>or</span></div>
+
+            <button class="demo-btn" id="demoLoginBtn" type="button">
                 Continue as Demo User
             </button>
-            
-            <div class="features">
-                <p>✓ Secure cloud storage with your Google account</p>
-                <p>✓ Access your budget from any device</p>
-                <p>✓ Your data is always safe and private</p>
+
+            <div class="features" aria-label="PennyWiseBT benefits">
+                <p><span class="feature-check" aria-hidden="true">✓</span><span>Secure cloud storage with your Google account</span></p>
+                <p><span class="feature-check" aria-hidden="true">✓</span><span>Access from any device</span></p>
+                <p><span class="feature-check" aria-hidden="true">✓</span><span>Your data is private</span></p>
             </div>
-        </div>
-    </div>
-    
+
+            <p class="privacy-note">Your sign-in is handled securely by Google.</p>
+        </section>
+    </main>
+
     <script type="module">
-        // Firebase 配置 - 请替换为你的 Firebase 项目配置
-        // 访问 https://console.firebase.google.com/ 创建项目并获取配置
+        // Firebase 閰嶇疆 - 璇锋浛鎹负浣犵殑 Firebase 椤圭洰閰嶇疆
+        // 璁块棶 https://console.firebase.google.com/ 鍒涘缓椤圭洰骞惰幏鍙栭厤缃?
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
         apiKey: "AIzaSyASiqwlHROFBHDhDidJWdmbDWHodI1fEGo",
@@ -195,11 +272,11 @@
         appId: "1:817127030663:web:51651f7cfdbfcdb3a35d22",
         measurementId: "G-J4NH67D1SX"
         };
-        // 检查是否配置了 Firebase
+        // 妫€鏌ユ槸鍚﹂厤缃簡 Firebase
         const isFirebaseConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY";
         
         if (isFirebaseConfigured) {
-            // 动态加载 Firebase SDK
+            // 鍔ㄦ€佸姞杞?Firebase SDK
             const firebaseScript = document.createElement('script');
             firebaseScript.src = "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js";
             firebaseScript.onload = () => {
@@ -238,13 +315,13 @@
             };
             document.head.appendChild(firebaseScript);
         } else {
-            // 如果没有配置 Firebase，显示提示
+            // 濡傛灉娌℃湁閰嶇疆 Firebase锛屾樉绀烘彁绀?
             document.getElementById('googleLoginBtn').onclick = () => {
                 alert('Please configure Firebase first.\n\n1. Go to https://console.firebase.google.com/\n2. Create a new project\n3. Add a web app\n4. Copy the firebaseConfig into login.html');
             };
         }
         
-        // Demo 登录
+        // Demo 鐧诲綍
         document.getElementById('demoLoginBtn').onclick = () => {
             const demoUser = {
                 uid: 'demo_' + Date.now(),
