@@ -501,6 +501,7 @@
     .feature-slide p{max-width:560px;margin:0;color:var(--muted);font-size:1.06rem;line-height:1.7}
     .slides-controls{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:8px}
     .slide-nav{width:42px;height:42px;border:1px solid var(--border);border-radius:50%;background:var(--surface-soft);color:var(--brand);font-size:1.7rem;line-height:1}
+    #slideNext span{display:none}
     .slide-dots{display:flex;gap:7px;align-items:center}
     .slide-dot{width:9px;height:9px;border:0;border-radius:999px;background:var(--border);padding:0}
     .slide-dot.active{width:26px;background:var(--brand)}
@@ -563,7 +564,7 @@
     .tour-layer[hidden]{display:none}.tour-shade{position:fixed;z-index:80;background:rgba(0,0,0,.5);pointer-events:auto}.tour-highlight{position:relative!important;z-index:90!important;border-radius:20px!important;outline:0!important;box-shadow:0 0 0 4px rgba(23,107,69,.3),0 0 22px rgba(23,107,69,.18),0 18px 50px rgba(0,0,0,.2)!important}.main-nav.tour-nav-active{z-index:90}.tour-tooltip{position:fixed;z-index:95;width:min(340px,calc(100vw - 32px));padding:18px;border:1px solid var(--border);border-radius:20px;background:#fff;color:#17231c;box-shadow:0 22px 60px rgba(0,0,0,.26)}.tour-tooltip p{margin:0 0 12px;line-height:1.45}.tour-progress{display:block;margin-bottom:14px;color:#68776f;font-size:.86rem;font-weight:850}.tour-actions{display:flex;align-items:center;justify-content:space-between;gap:14px}.tour-skip{border:0;background:transparent;color:#68776f;font-weight:850;text-decoration:underline;text-underline-offset:3px}.tour-skip:hover{transform:none;color:var(--brand-dark)}.tour-complete-modal{width:min(460px,100%)}@media(min-width:769px) and (max-width:1024px){.tour-layer{display:none!important}}@media(max-width:768px){.mobile-fab.tour-highlight{position:fixed!important}.tour-tooltip{width:calc(100vw - 32px);padding:16px;border-radius:18px}.tour-tooltip p{font-size:.9rem}.tour-actions{gap:10px}.tour-actions .primary-button{padding:10px 13px}}
     @media(max-width:900px){.filter-bar{grid-template-columns:1fr 1fr}.reset-wrap{grid-column:1/-1}.reset-wrap button{width:100%}.category-budget-row{grid-template-columns:1fr 1fr}.category-progress{grid-column:1/-1}.achievement-list,.store-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.analytics-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:780px){.history-item{grid-template-columns:minmax(0,1fr) auto}.history-item .delete-button{grid-column:1/-1;width:100%}.budget-summary-card{grid-template-columns:auto 1fr}.emoji-grid{grid-template-columns:repeat(6,1fr)}.slides-shell{padding:18px;border-radius:24px}.feature-slide{min-height:340px;padding:12px}.slide-emoji{width:92px;height:92px;font-size:3rem}}@media(max-width:520px){.form-grid,.filter-bar,.custom-date-row,.category-budget-row,.achievement-list,.store-grid,.onboarding-categories,.goal-stats,.export-checks,.analytics-controls,.analytics-metrics{grid-template-columns:1fr}.field.full,.reset-wrap,.category-progress{grid-column:auto}.toast{right:20px;left:20px}.onboarding-category{grid-template-columns:1fr}.onboarding-actions{flex-direction:column-reverse}.onboarding-actions button{width:100%}.history-heading{flex-direction:column}.history-heading button{width:100%}.emoji-grid{grid-template-columns:repeat(5,1fr)}.slides-backdrop{padding:14px}.slides-controls{gap:8px}.slide-nav{width:38px;height:38px}}
 
-    .mobile-more,.mobile-more-menu,.mobile-fab,.mobile-sheet-backdrop{display:none}
+    .mobile-more,.mobile-more-menu,.mobile-more-overlay,.mobile-fab,.mobile-sheet-backdrop{display:none}
     @media (max-width:768px){
       .app-shell{width:calc(100% - 24px);padding:10px 0 112px}
       .main-nav{left:10px;right:10px;bottom:10px;min-height:66px;padding:5px;border-radius:18px;justify-content:stretch}
@@ -591,6 +592,19 @@
       .history-item{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px}.history-item>div:first-child{grid-column:1;grid-row:1 / span 2}.history-item .transaction-amount{grid-column:2;grid-row:1;justify-self:end;text-align:right}.history-item .transaction-actions{grid-column:2;grid-row:2;justify-self:end}.history-item .delete-button{width:auto}.recurring-modal #recurringForm{grid-template-columns:1fr}.recurring-modal .category-select-wrap,.recurring-modal #recurringCategory{min-width:0}
     }
 
+    @media (max-width:768px){
+      html{scroll-padding-bottom:190px}
+      .app-shell{padding-top:8px;padding-bottom:172px}
+      .topbar{position:relative;grid-template-columns:minmax(0,1fr) auto auto auto;grid-template-areas:"brand settings avatar coin" "date date date date";gap:8px 6px;align-items:center;min-height:0}
+      .brand{grid-area:brand;min-width:0;gap:6px;font-size:1rem}.brand span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brand-mark{width:34px;height:34px}.presentation-indicator{width:24px;height:24px;margin-left:2px;border:0;background:var(--surface-soft);color:var(--brand)}.presentation-indicator .app-icon{width:15px;height:15px}
+      .top-actions{display:contents}.top-actions .demo-cloud-badge{display:none!important}.top-actions #settingsButton{grid-area:settings}.top-actions #avatarButton{grid-area:avatar}.top-actions #coinBalance{grid-area:coin;padding:7px 8px;font-size:.78rem;box-shadow:none}.top-actions .demo-date-bar{grid-area:date;justify-self:start;max-width:none;padding:6px 9px;font-size:.75rem}.top-actions .account-menu{top:44px;right:0}
+      main,.page{padding-bottom:28px}.page:last-child{padding-bottom:44px}
+      .mobile-more-overlay{position:fixed;inset:0;z-index:74;background:rgba(8,18,12,.32);backdrop-filter:blur(1px)}.mobile-more-overlay:not([hidden]){display:block}.mobile-more-overlay[hidden]{display:none}.mobile-fab.menu-open{opacity:0;pointer-events:none}
+      .mobile-more-menu{z-index:75;max-height:calc(100dvh - 178px);overflow-y:auto}.mobile-fab{bottom:94px}.mobile-sheet{max-height:min(70dvh,560px);padding-bottom:calc(24px + env(safe-area-inset-bottom))}.mobile-sheet form{padding-bottom:8px}
+      .modal-backdrop{z-index:100;align-items:flex-start;overflow-y:auto;padding:12px;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(18px,env(safe-area-inset-bottom))}.settings-modal{max-height:calc(100dvh - 24px);margin:auto 0}.form-grid input,.form-grid select,.mobile-sheet input,.mobile-sheet select{scroll-margin-block:96px}
+      .slides-backdrop{padding:0;place-items:stretch;overflow:hidden}.slides-shell{width:100%;height:100vh;height:100dvh;min-height:100vh;min-height:100dvh;display:grid;grid-template-rows:minmax(0,1fr) auto;padding:max(18px,env(safe-area-inset-top)) 18px max(16px,env(safe-area-inset-bottom));border:0;border-radius:0;box-shadow:none}.slides-track{min-height:0;height:100%;overflow:hidden}.feature-slide{min-height:0;height:100%;align-content:center;gap:12px;overflow-y:auto;padding:12px 4px 20px}.slide-emoji{width:78px;height:78px;border-radius:24px}.slide-emoji .app-icon{width:2.8rem;height:2.8rem}.feature-slide h1{font-size:clamp(1.35rem,7vw,1.75rem);line-height:1.15}.feature-slide p{max-width:34ch;font-size:.92rem;line-height:1.45}.slides-controls{display:grid;grid-template-columns:42px minmax(0,1fr);grid-template-rows:auto 48px;align-items:center;gap:10px;margin:0;padding-top:10px}.slide-dots{grid-column:1/-1;grid-row:1;justify-content:center}.slide-nav{width:42px;height:44px;font-size:1.35rem}.slide-nav#slidePrev{grid-column:1;grid-row:2}.slide-nav#slideNext{grid-column:2;grid-row:2;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;border-radius:12px;color:#fff;background:var(--brand);font-size:.92rem;font-weight:850}.slide-nav#slideNext span{display:inline}.slide-nav#slideNext .app-icon{width:18px;height:18px}.slides-start{grid-column:1/-1;grid-row:2;width:100%;min-height:44px}.slide-dot{width:8px;height:8px}.slide-dot.active{width:22px}
+    }
+
   </style>
 </head>
 <body>
@@ -614,7 +628,7 @@
       <div class="slides-controls">
         <button class="slide-nav" id="slidePrev" type="button" aria-label="Previous slide">‹</button>
         <div class="slide-dots" id="slideDots" aria-label="Onboarding progress"></div>
-        <button class="slide-nav" id="slideNext" type="button" aria-label="Next slide">›</button>
+        <button class="slide-nav" id="slideNext" type="button" aria-label="Next slide"><span data-i18n="slideContinue">Continue</span><i data-lucide="arrow-right"></i></button>
         <button class="primary-button slides-start" id="slidesGetStarted" type="button" hidden><span class="button-content"><i data-lucide="rocket"></i><span data-i18n="slidesGetStarted">Get Started</span></span></button>
       </div>
     </div>
@@ -625,14 +639,14 @@
       <div class="brand" aria-label="PennyWiseBT">
         <span class="brand-mark" aria-hidden="true"><i data-lucide="piggy-bank" class="app-icon"></i></span>
         <span>PennyWiseBT</span>
+        <span class="presentation-indicator" id="presentationIndicator" hidden title="Presentation Mode enabled"><i data-lucide="mic-2"></i></span>
       </div>
 
       <div class="top-actions">
         <div class="coin-balance" id="coinBalance" aria-label="Penny balance"><i data-lucide="coins"></i><span id="coinBalanceAmount">0</span></div>
-        <span class="demo-cloud-badge" id="demoModeBadge" hidden data-i18n="demoModeCloud">Demo Mode - Data saved locally only</span>
-        <span class="presentation-indicator" id="presentationIndicator" hidden title="Presentation Mode enabled"><i data-lucide="mic-2"></i></span>
-        <button class="icon-button avatar-button" id="avatarButton" type="button" aria-label="Account" aria-expanded="false"><i data-lucide="circle-user-round"></i></button>
         <div class="demo-date-bar" id="demoDateBar" hidden><i data-lucide="calendar-days"></i> Demo date: June 15, 2026</div>
+        <span class="demo-cloud-badge" id="demoModeBadge" hidden data-i18n="demoModeCloud">Demo Mode - Data saved locally only</span>
+        <button class="icon-button avatar-button" id="avatarButton" type="button" aria-label="Account" aria-expanded="false"><i data-lucide="circle-user-round"></i></button>
         <button class="icon-button" id="settingsButton" type="button" aria-label="Settings"><i data-lucide="settings"></i></button>
         <div class="account-menu" id="accountMenu" hidden>
           <button id="logoutButton" type="button" data-i18n="logout">Logout</button>
@@ -657,6 +671,7 @@
       <button class="mobile-more-item" type="button" data-page="recurring"><i data-lucide="calendar-clock"></i><span data-i18n="recurringBills">Recurring Bills</span></button>
       <button class="mobile-more-item" type="button" data-page="achievements"><i data-lucide="trophy"></i><span data-i18n="achievements">Achievements</span></button>
     </div>
+    <div class="mobile-more-overlay" id="mobileMoreOverlay" hidden></div>
     <main>
       <section class="page active" id="dashboardPage">
         <article class="budget-summary-card" id="budgetSummaryCard" hidden><div class="summary-icon" id="budgetSummaryIcon"><i data-lucide="check-circle"></i></div><div><strong id="budgetSummaryTitle"></strong><p class="lede" id="budgetSummaryText" style="margin:4px 0 0"></p></div><button class="summary-close" id="closeBudgetSummary" type="button" aria-label="Close"><i data-lucide="x"></i></button></article>
@@ -1095,6 +1110,9 @@
     Object.assign(T.en,{editTransaction:"Edit transaction",transactionUpdated:"Transaction updated",pennyAdded:"Added {amount} Penny"});
     Object.assign(T.zh,{editTransaction:"编辑交易",transactionUpdated:"交易已更新",pennyAdded:"已添加 {amount} Penny"});
     Object.assign(T.fr,{editTransaction:"Modifier la transaction",transactionUpdated:"Transaction mise à jour",pennyAdded:"{amount} Penny ajouté(s)"});
+    Object.assign(T.en,{slideContinue:"Continue"});
+    Object.assign(T.zh,{slideContinue:"继续"});
+    Object.assign(T.fr,{slideContinue:"Continuer"});
     Object.assign(T.en,{more:"More",quickAdd:"Quick add"});
     Object.assign(T.zh,{more:"更多",quickAdd:"快速添加"});
     Object.assign(T.fr,{more:"Plus",quickAdd:"Ajout rapide"});
@@ -1254,15 +1272,16 @@
     function showMonthlyReset(){const hasBudget=monthlyBudgetExists();$("#monthlyResetMessage").textContent=tr(hasBudget?"previousBudgetMessage":"noPreviousBudgetMessage");$("#monthlyBudgetFields").hidden=!hasBudget;$("#monthlyBudgetActions").hidden=!hasBudget;$("#monthlyEmptyActions").hidden=hasBudget;if(hasBudget){$("#monthlyResetCurrency").textContent=state.defaultCurrency;$("#monthlyResetBudget").value=budget().toFixed(state.defaultCurrency==="JPY"?0:2);monthlyResetCategories()}$("#monthlyResetBackdrop").hidden=false;document.body.style.overflow="hidden"}
     function checkMonthlyReset(){const now=appNow();if(now.getDate()===1&&state.lastSeenMonth!==currentMonth())showMonthlyReset()}
     function finishOnboarding(){state.hasSeenOnboarding=true;if(appNow().getDate()===1)state.lastSeenMonth=currentMonth();save();$("#onboardingBackdrop").hidden=true;document.body.style.overflow="";render();if(!maybeStartTour())checkMonthlyGoalReminder()}
-    function closeMobileMore(){$("#mobileMoreMenu").hidden=true;$("#mobileMoreButton").setAttribute("aria-expanded","false")}
+    function closeMobileMore(){$("#mobileMoreMenu").hidden=true;$("#mobileMoreOverlay").hidden=true;$("#mobileQuickAddButton").classList.remove("menu-open");$("#mobileMoreButton").setAttribute("aria-expanded","false")}
     function closeMobileQuickAdd(){$("#mobileQuickAddBackdrop").hidden=true;$("#mobileQuickAddSheet").style.transform="";document.body.style.overflow=""}
     function syncMobileUI(){const mobile=innerWidth<=768;$("#mobileQuickAddButton").hidden=!mobile;if(!mobile){closeMobileMore();if(!$("#mobileQuickAddBackdrop").hidden)closeMobileQuickAdd()}}
     function render(){unlockAchievements();access();i18n();account();$("#defaultCurrencySelect").value=state.defaultCurrency;$("#transactionCurrency").value=state.defaultCurrency;$("#recurringCurrency").value=state.defaultCurrency;dashboard();history();budgets();recurring();achievements();store();renderGoal();renderAnalytics();renderCustomCategories();syncMobileUI();refreshIcons()}
     function page(n){closeMobileMore();$$(".page").forEach(x=>x.classList.toggle("active",x.id===n+"Page"));$$(".nav-button").forEach(x=>x.classList.toggle("active",x.dataset.page===n));$("#mobileMoreButton").classList.toggle("active",["analytics","budget","recurring","achievements"].includes(n));if(n==="history")history();if(n==="budget")budgets();if(n==="recurring")recurring();if(n==="analytics")renderAnalytics();if(n==="achievements"){achievements();store()}refreshIcons();scrollTo({top:0,behavior:"smooth"})}
     $$("[data-page]").forEach(b=>b.onclick=()=>page(b.dataset.page));$$("[data-go-page]").forEach(b=>b.onclick=()=>page(b.dataset.goPage));$$(".type-button").forEach(b=>{if(b.dataset.type)b.onclick=()=>{kind=b.dataset.type;$$("[data-type]").forEach(x=>x.classList.toggle("active",x===b))}});$("#dateInput").value=iso();
-    $("#mobileMoreButton").onclick=e=>{e.stopPropagation();const menu=$("#mobileMoreMenu"),opening=menu.hidden;menu.hidden=!opening;$("#mobileMoreButton").setAttribute("aria-expanded",String(opening))};$$(".mobile-more-item").forEach(b=>b.onclick=()=>page(b.dataset.page));document.addEventListener("click",e=>{if(!e.target.closest("#mobileMoreMenu")&&!e.target.closest("#mobileMoreButton"))closeMobileMore()});
+    $("#mobileMoreButton").onclick=e=>{e.stopPropagation();const menu=$("#mobileMoreMenu"),opening=menu.hidden;menu.hidden=!opening;$("#mobileMoreOverlay").hidden=!opening;$("#mobileQuickAddButton").classList.toggle("menu-open",opening);$("#mobileMoreButton").setAttribute("aria-expanded",String(opening))};$$(".mobile-more-item").forEach(b=>b.onclick=()=>page(b.dataset.page));$("#mobileMoreOverlay").onclick=closeMobileMore;document.addEventListener("click",e=>{if(!e.target.closest("#mobileMoreMenu")&&!e.target.closest("#mobileMoreButton"))closeMobileMore()});
     function openMobileQuickAdd(){if(innerWidth>768){page("add");return}closeMobileMore();$("#mobileQuickAddForm").reset();mobileKind="outcome";$$("[data-mobile-type]").forEach(b=>b.classList.toggle("active",b.dataset.mobileType==="outcome"));$("#mobileCategoryInput").value=categoriesAll()[0]?.[0]||"other";$("#mobileQuickAddBackdrop").hidden=false;document.body.style.overflow="hidden";$("#mobileAmountInput").focus();refreshIcons()}$("#mobileQuickAddButton").onclick=openMobileQuickAdd;$("#closeMobileQuickAdd").onclick=closeMobileQuickAdd;$("#mobileQuickAddBackdrop").onclick=e=>{if(e.target===$("#mobileQuickAddBackdrop"))closeMobileQuickAdd()};$$("[data-mobile-type]").forEach(b=>b.onclick=()=>{mobileKind=b.dataset.mobileType;$$("[data-mobile-type]").forEach(x=>x.classList.toggle("active",x===b))});
     let mobileSheetStartY=null;const mobileSheet=$("#mobileQuickAddSheet"),mobileSheetHandle=$("#mobileSheetHandle");mobileSheetHandle.onpointerdown=e=>{mobileSheetStartY=e.clientY;mobileSheet.style.transition="none";mobileSheetHandle.setPointerCapture?.(e.pointerId)};mobileSheetHandle.onpointermove=e=>{if(mobileSheetStartY===null)return;mobileSheet.style.transform="translateY("+Math.max(0,e.clientY-mobileSheetStartY)+"px)"};const finishMobileSheetDrag=e=>{if(mobileSheetStartY===null)return;const moved=e.clientY-mobileSheetStartY;mobileSheetStartY=null;mobileSheet.style.transition="";if(moved>90)closeMobileQuickAdd();else mobileSheet.style.transform=""};mobileSheetHandle.onpointerup=finishMobileSheetDrag;mobileSheetHandle.onpointercancel=finishMobileSheetDrag;
+    function revealMobileField(el){if(innerWidth>768||!el?.matches("input,select,textarea"))return;setTimeout(()=>el.scrollIntoView({block:"center",inline:"nearest",behavior:"smooth"}),180)}document.addEventListener("focusin",e=>revealMobileField(e.target));const revealFocusedField=()=>revealMobileField(document.activeElement);if(window.visualViewport)window.visualViewport.addEventListener("resize",revealFocusedField);
     $("#slidePrev").onclick=()=>setSlide(slideIndex-1);$("#slideNext").onclick=()=>setSlide(slideIndex+1);$("#slidesGetStarted").onclick=closeSlidesToBudget;$("#slidesTrack").onpointerdown=e=>{slideStartX=e.clientX};$("#slidesTrack").onpointerup=e=>{const dx=e.clientX-slideStartX;if(Math.abs(dx)>45)setSlide(slideIndex+(dx<0?1:-1))};
     $("#tourGotIt").onclick=()=>showTourStep(tourStep+1);$("#tourSkip").onclick=()=>finishTour(false);$("#tourCompleteGo").onclick=()=>closeTourComplete(true);$("#tourCompleteLater").onclick=()=>closeTourComplete(false);addEventListener("resize",()=>{if(tourActive)showTourStep(tourStep);syncMobileUI()});addEventListener("scroll",()=>tourActive&&positionTour(tourTarget),{passive:true});
     $("#closeBudgetSummary").onclick=()=>$("#budgetSummaryCard").hidden=true;$("#analyticsRange").onchange=renderAnalytics;
